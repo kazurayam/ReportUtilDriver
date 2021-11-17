@@ -19,6 +19,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
 import internal.GlobalVariable
+import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.Path
 import com.kms.katalon.core.configuration.RunConfiguration
@@ -26,18 +27,31 @@ import com.kms.katalon.core.configuration.RunConfiguration
 import static org.hamcrest.CoreMatchers.*
 import static org.junit.Assert.*
 
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4.class)
 public class ReportWriterDriverTest {
-	
+
+	private Path projectDir
+	private Path fixtureDir
+
+	@Before
+	void setup() {
+		this.projectDir = Paths.get(RunConfiguration.getProjectDir())
+		this.fixtureDir = projectDir.resolve("Include/testFixture")
+	}
+
 	@Test
-	void test_getProjectDir() {
-		Path projectDir = Paths.get(RunConfiguration.getProjectDir())
-		ReportWriterDriver rwd = new ReportWriterDriver(projectDir)
-		Path actual = rwd.getProjectDir()
-		assertThat(actual, is(projectDir))
+	void test_resolveOutputReportDir() {
+		String relativePath = "20211117_210214/main/TS1/20211117_210214"
+		Path inputReportsDir = this.fixtureDir.resolve("Reports")
+		Path inputReportDir = inputReportsDir.resolve(relativePath)
+		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest")
+		Files.createDirectories(targetDir)
+		Path outputReportDir = ReportWriterDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
+		assert outputReportDir == targetDir.resolve(relativePath)
 	}
 }
