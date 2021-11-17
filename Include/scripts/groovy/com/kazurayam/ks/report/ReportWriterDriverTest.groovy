@@ -1,36 +1,15 @@
 package com.kazurayam.ks.report
 
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-
-import com.kms.katalon.core.annotation.Keyword
-import com.kms.katalon.core.checkpoint.Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testcase.TestCase
-import com.kms.katalon.core.testdata.TestData
-import com.kms.katalon.core.testobject.TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-
-import internal.GlobalVariable
 import java.nio.file.Files
-import java.nio.file.Paths
 import java.nio.file.Path
-import com.kms.katalon.core.configuration.RunConfiguration
-
-import static org.hamcrest.CoreMatchers.*
-import static org.junit.Assert.*
+import java.nio.file.Paths
 
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+
+import com.kms.katalon.core.configuration.RunConfiguration
 
 @RunWith(JUnit4.class)
 public class ReportWriterDriverTest {
@@ -49,9 +28,26 @@ public class ReportWriterDriverTest {
 		String relativePath = "20211117_210214/main/TS1/20211117_210214"
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
 		Path inputReportDir = inputReportsDir.resolve(relativePath)
-		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest")
+		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_resolveOutputReportDir")
 		Files.createDirectories(targetDir)
 		Path outputReportDir = ReportWriterDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
 		assert outputReportDir == targetDir.resolve(relativePath)
+	}
+
+	@Test
+	void test_writeReports() {
+		String relativePath = "20211117_210214/main/TS1/20211117_210214"
+		Path inputReportsDir = this.fixtureDir.resolve("Reports")
+		Path execution0log = inputReportsDir.resolve(relativePath).resolve("execution0.log")
+		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_writeReports")
+		Files.createDirectories(targetDir)
+		ReportWriterDriver.writeReports(execution0log, targetDir)
+		//
+		Path html = targetDir.resolve(relativePath).resolve("20211117_210214.html")
+		assert Files.exists(html)
+		//
+		Path xml = targetDir.resolve(relativePath).resolve("JUnit_Report.xml")
+		assert Files.exists(xml)
+		//
 	}
 }
