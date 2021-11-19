@@ -17,11 +17,11 @@ public class ReportWriterDriverTest {
 
 	private Path projectDir
 	private Path fixtureDir
-	
+
 	private static String RELATIVE_PATH = "20211117_210214/main/TS1/20211117_210214"
 	private static String HTML_FILENAME = "20211117_210214.html"
 	private static String XML_FILENAME  = "JUnit_Report.xml"
-	
+
 	@Before
 	void setup() {
 		this.projectDir = Paths.get(RunConfiguration.getProjectDir())
@@ -29,14 +29,21 @@ public class ReportWriterDriverTest {
 	}
 
 	@Test
-	void test_resolveOutputReportDir() {
-		String relativePath = "20211117_210214/main/TS1/20211117_210214"
+	void test_findAncestorReportsDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path inputReportDir = inputReportsDir.resolve(relativePath)
+		Path execution0log = inputReportsDir.resolve(RELATIVE_PATH).resolve("execution0.log")
+		Path actual = ReportWriterDriver.findAncestorReportsDir(execution0log)
+		assert actual == inputReportsDir
+	}
+	
+	@Test
+	void test_resolveOutputReportDir() {
+		Path inputReportsDir = this.fixtureDir.resolve("Reports")
+		Path inputReportDir = inputReportsDir.resolve(RELATIVE_PATH)
 		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_resolveOutputReportDir")
 		Files.createDirectories(targetDir)
 		Path outputReportDir = ReportWriterDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
-		assert outputReportDir == targetDir.resolve(relativePath)
+		assert outputReportDir == targetDir.resolve(RELATIVE_PATH)
 	}
 
 	@Test
@@ -54,7 +61,7 @@ public class ReportWriterDriverTest {
 		assert Files.exists(xml)
 		//
 	}
-	
+
 	@Ignore
 	@Test
 	void test_generateBunches() {

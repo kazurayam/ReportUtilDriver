@@ -7,7 +7,13 @@ import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
 
 import com.kms.katalon.core.logging.model.TestSuiteLogRecord
+
+// until v8.1.x
+// import com.kms.katalon.core.reporting.ReportWriterUtil
+
+// since v8.2.0
 import com.kms.katalon.core.reporting.ReportUtil
+
 
 public class ReportWriterDriver {
 
@@ -23,7 +29,7 @@ public class ReportWriterDriver {
 		Path outputBunchDir = resolveOutputReportDir(inputReportsDir, inputBunchDir, targetDir)
 		ReportUtil.writeLogRecordToFiles(suiteLogEntry, outputBunchDir.toFile())
 	}
-	
+
 	static void generateBunches(Path reportsDir, Path targetDir) {
 		Objects.requireNonNull(reportsDir)
 		assert Files.exists(reportsDir) : "${reportsDir.toString()} is not present"
@@ -31,13 +37,13 @@ public class ReportWriterDriver {
 		//
 		List<Path> execution0logFiles = new ArrayList<Path>()
 		Files.walkFileTree(reportsDir, new SimpleFileVisitor<Path>() {
-			@Override
-			FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-				if (file.getFileName().toString() == 'execution0.log') {
-					execution0logFiles.add(file)
-				}
-			}
-		})
+					@Override
+					FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+						if (file.getFileName().toString() == 'execution0.log') {
+							execution0logFiles.add(file)
+						}
+					}
+				})
 		//
 		execution0logFiles.each({ Path execution0log ->
 			generateABunch(execution0log, targetDir)
@@ -49,10 +55,10 @@ public class ReportWriterDriver {
 		return targetDir.resolve(relativePath)
 	}
 
-	private static Path findAncestorReportsDir(Path execution0log) {
-		return execution0log.getParent().getParent().getParent().getParent()
+	static Path findAncestorReportsDir(Path execution0log) {
+		return execution0log.getParent().getParent().getParent().getParent().getParent()
 	}
-	
+
 	/**
 	 * 
 	 * @author kazurayam
@@ -60,13 +66,13 @@ public class ReportWriterDriver {
 	class Execution0logFinder extends SimpleFileVisitor<Path> {
 		private List<Path> list;
 		static String FILENAME = "execution0.log"
-		
+
 		Execution0logFinder() {
 			list = new ArrayList<Path>()
 		}
-		
-		
-		
+
+
+
 	}
 
 }
