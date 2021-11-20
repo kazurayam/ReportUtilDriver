@@ -55,10 +55,15 @@ public class ReportUtilWrapperTest {
 		Path html = targetDir.resolve(FixtureConstants.RELATIVE_PATH).resolve(FixtureConstants.HTML_FILENAME)
 		assert Files.exists(html)
 	}
-	
+
 	@Ignore
 	@Test
 	void test_isReportUtilClassFound() {
 		assert ReportUtilWrapper.isReportUtilClassFound()
+	}
+	
+	@Test
+	void test_isBasicReportWriterUtilClassFound() {
+		assert ReportUtilWrapper.isBasicReportWriterUtilClassFound()
 	}
 }

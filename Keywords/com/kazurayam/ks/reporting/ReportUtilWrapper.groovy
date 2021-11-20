@@ -7,11 +7,12 @@ import java.lang.reflect.Method
 
 public class ReportUtilWrapper {
 
-	// since Katalon Studio v8.2.0
+	// at Katalon Studio v7.8.2
+	// at Katalon Studio v8.2.0
 	static final String FQCN_ReportUtil = 'com.kms.katalon.core.reporting.ReportUtil'
 
-	// Katalon Stuido v7.x - 8.1.0
-
+	// in the jar of the Basic Report Plugin
+	static final String FQCN_BasicReportWriterUtil = 'com.kms.katalon.core.reporting.ReportWriterUtil'
 
 	static Class engine = null
 
@@ -47,5 +48,17 @@ public class ReportUtilWrapper {
 	static Class getClassOfReportUtil() {
 		return Class.forName(FQCN_ReportUtil)
 	}
+	
+	static boolean isBasicReportWriterUtilClassFound() {
+		try {
+			Class clazz = Class.forName(FQCN_BasicReportWriterUtil)
+			return true
+		} catch (ClassNotFoundException e) {
+			return false
+		}
+	}
 
+	static boolean getClassOfBasicReportWriterUtil() {
+		return Class.forName(FQCN_BasicReportWriterUtil)
+	}
 }
