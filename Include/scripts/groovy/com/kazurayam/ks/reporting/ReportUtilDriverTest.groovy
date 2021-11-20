@@ -18,14 +18,14 @@ public class ReportUtilDriverTest {
 	private Path projectDir
 	private Path fixtureDir
 
-	private static String RELATIVE_PATH = "20211117_210214/main/TS1/20211117_210214"
-	private static String HTML_FILENAME = "20211117_210214.html"
+	private static String RELATIVE_PATH = "20211120_140743/main/TS1/20211120_140743"
+	private static String HTML_FILENAME = "20211120_140743.html"
 	private static String XML_FILENAME  = "JUnit_Report.xml"
 
 	@Before
 	void setup() {
 		this.projectDir = Paths.get(RunConfiguration.getProjectDir())
-		this.fixtureDir = projectDir.resolve("Include/testFixture")
+		this.fixtureDir = projectDir.resolve("Include/fixtures")
 	}
 
 	@Test
