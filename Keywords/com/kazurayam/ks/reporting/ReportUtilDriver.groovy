@@ -17,14 +17,14 @@ import com.kms.katalon.core.reporting.ReportUtil
 
 public class ReportUtilDriver {
 
-	static void generateABunch(Path execution0log, Path targetDir) {
-		Objects.requireNonNull(execution0log)
-		assert Files.exists(execution0log) : "${execution0log} is not presennt"
+	static void generateABunch(Path bunchDir, Path targetDir) {
+		Objects.requireNonNull(bunchDir)
+		assert Files.exists(bunchDir) : "${bunchDir} is not presennt"
 		Objects.requireNonNull(targetDir)
 		Files.createDirectories(targetDir)
 		//
-		Path inputBunchDir = execution0log.getParent()
-		Path inputReportsDir = findAncestorReportsDir(execution0log)
+		Path inputBunchDir = bunchDir
+		Path inputReportsDir = findAncestorReportsDir(inputBunchDir)
 		TestSuiteLogRecord suiteLogEntry = ReportUtil.generate(inputBunchDir.toString())
 		Path outputBunchDir = resolveOutputReportDir(inputReportsDir, inputBunchDir, targetDir)
 		ReportUtil.writeLogRecordToFiles(suiteLogEntry, outputBunchDir.toFile())
@@ -35,28 +35,28 @@ public class ReportUtilDriver {
 		assert Files.exists(reportsDir) : "${reportsDir.toString()} is not present"
 		Objects.requireNonNull(targetDir)
 		//
-		List<Path> execution0logFiles = new ArrayList<Path>()
+		List<Path> bunchDirs = new ArrayList<Path>()
 		Files.walkFileTree(reportsDir, new SimpleFileVisitor<Path>() {
 					@Override
 					FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 						if (file.getFileName().toString() == 'execution0.log') {
-							execution0logFiles.add(file)
+							bunchDirs.add(file.getParent())
 						}
 					}
 				})
 		//
-		execution0logFiles.each({ Path execution0log ->
-			generateABunch(execution0log, targetDir)
+		bunchDirs.each({ Path bunchDir ->
+			generateABunch(bunchDir, targetDir)
 		})
 	}
 
-	static Path resolveOutputReportDir(Path inputReportsDir, Path inputReportDir, Path targetDir) {
-		Path relativePath = inputReportsDir.relativize(inputReportDir)
+	static Path resolveOutputReportDir(Path inputReportsDir, Path inputBunchDir, Path targetDir) {
+		Path relativePath = inputReportsDir.relativize(inputBunchDir)
 		return targetDir.resolve(relativePath)
 	}
 
-	static Path findAncestorReportsDir(Path execution0log) {
-		return execution0log.getParent().getParent().getParent().getParent().getParent()
+	static Path findAncestorReportsDir(Path bunchDir) {
+		return bunchDir.getParent().getParent().getParent().getParent()
 	}
 
 	/**

@@ -31,8 +31,8 @@ public class ReportUtilDriverTest {
 	@Test
 	void test_findAncestorReportsDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path execution0log = inputReportsDir.resolve(RELATIVE_PATH).resolve("execution0.log")
-		Path actual = ReportUtilDriver.findAncestorReportsDir(execution0log)
+		Path bunchDir = inputReportsDir.resolve(RELATIVE_PATH)
+		Path actual = ReportUtilDriver.findAncestorReportsDir(bunchDir)
 		assert actual == inputReportsDir
 	}
 
@@ -49,10 +49,10 @@ public class ReportUtilDriverTest {
 	@Test
 	void test_generateABunch() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path execution0log = inputReportsDir.resolve(RELATIVE_PATH).resolve("execution0.log")
+		Path bunchDir = inputReportsDir.resolve(RELATIVE_PATH)
 		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_generateABunch")
 		Files.createDirectories(targetDir)
-		ReportUtilDriver.generateABunch(execution0log, targetDir)
+		ReportUtilDriver.generateABunch(bunchDir, targetDir)
 		//
 		Path html = targetDir.resolve(RELATIVE_PATH).resolve(HTML_FILENAME)
 		assert Files.exists(html)
