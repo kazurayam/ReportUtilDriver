@@ -18,7 +18,7 @@ import com.kms.katalon.core.configuration.RunConfiguration
 
 @RunWith(JUnit4.class)
 public class ReportUtilWrapperTest {
-	
+
 	static Path projectDir
 	static Path fixtureDir
 	static Path classOutputDir
@@ -41,7 +41,7 @@ public class ReportUtilWrapperTest {
 		TestSuiteLogRecord suiteLogEntry = ReportUtilWrapper.generate(bunchDir.toString())
 		assert suiteLogEntry != null
 	}
-	
+
 	@Test
 	void test_writeLogRecordToFiles() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
@@ -56,4 +56,9 @@ public class ReportUtilWrapperTest {
 		assert Files.exists(html)
 	}
 	
+	@Ignore
+	@Test
+	void test_isReportUtilClassFound() {
+		assert ReportUtilWrapper.isReportUtilClassFound()
+	}
 }
