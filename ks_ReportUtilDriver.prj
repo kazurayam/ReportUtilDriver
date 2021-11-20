@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
    <description></description>
-   <name>ks_ReportWriterDriver</name>
+   <name>ks_ReportUtilDriver</name>
    <tag></tag>
    <UUID>aa6e722a-39a5-4053-964f-79ee364285bd</UUID>
    <migratedVersion>5.9.0</migratedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
-   <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/ks_ReportWriterDriver/ks_ReportWriterDriver.prj</projectFileLocation>
+   <projectFileLocation>/Users/kazuakiurayama/katalon-workspace/ks_ReportUtilDriver/ks_ReportUtilDriver.prj</projectFileLocation>
    <sourceContent>
       <sourceFolderList>
          <sourceFolderConfiguration>
