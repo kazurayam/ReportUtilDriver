@@ -7,11 +7,14 @@ import java.lang.reflect.Method
 
 public class ReportUtilWrapper {
 
-	// since Katalon Studio 8.2.0
+	// since Katalon Studio v8.2.0
 	static final String FQCN_ReportUtil = 'com.kms.katalon.core.reporting.ReportUtil'
-	
+
+	// Katalon Stuido v7.x - 8.1.0
+
+
 	static Class engine = null
-	
+
 	static {
 		if (isReportUtilClassFound()) {
 			engine = getClassOfReportUtil()
@@ -19,7 +22,7 @@ public class ReportUtilWrapper {
 			throw new IllegalStateException("Unable to load Class " + FQCN_ReportUtil + " or its equivalents.")
 		}
 	}
-	
+
 	static TestSuiteLogRecord generate(String bunchDir) {
 		Method m = engine.getDeclaredMethod("generate", String.class)
 		TestSuiteLogRecord result = m.invoke(null, bunchDir)
@@ -31,7 +34,7 @@ public class ReportUtilWrapper {
 		Method m = engine.getDeclaredMethod("writeLogRecordToFiles", TestSuiteLogRecord.class, File.class)
 		m.invoke(null, suiteLogEntry, bunchDir)
 	}
-	
+
 	static boolean isReportUtilClassFound() {
 		try {
 			Class clazz = Class.forName(FQCN_ReportUtil)
@@ -40,7 +43,7 @@ public class ReportUtilWrapper {
 			return false
 		}
 	}
-	
+
 	static Class getClassOfReportUtil() {
 		return Class.forName(FQCN_ReportUtil)
 	}
