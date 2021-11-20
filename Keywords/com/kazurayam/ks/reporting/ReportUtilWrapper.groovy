@@ -19,7 +19,11 @@ public class ReportUtilWrapper {
 	static {
 		if (isReportUtilClassFound()) {
 			engine = getClassOfReportUtil()
-		} else {
+		} 
+		if (isBasicReportWriterUtilClassFound()) {
+			engine = getClassOfBasicReportWriterUtil()
+		} 
+		else {
 			throw new IllegalStateException("Unable to load Class " + FQCN_ReportUtil + " or its equivalents.")
 		}
 	}
@@ -48,7 +52,7 @@ public class ReportUtilWrapper {
 	static Class getClassOfReportUtil() {
 		return Class.forName(FQCN_ReportUtil)
 	}
-	
+
 	static boolean isBasicReportWriterUtilClassFound() {
 		try {
 			Class clazz = Class.forName(FQCN_BasicReportWriterUtil)
