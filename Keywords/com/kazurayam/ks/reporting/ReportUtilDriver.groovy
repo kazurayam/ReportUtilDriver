@@ -1,4 +1,4 @@
-package com.kazurayam.ks.report
+package com.kazurayam.ks.reporting
 
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
@@ -15,7 +15,7 @@ import com.kms.katalon.core.logging.model.TestSuiteLogRecord
 import com.kms.katalon.core.reporting.ReportUtil
 
 
-public class ReportWriterDriver {
+public class ReportUtilDriver {
 
 	static void generateABunch(Path execution0log, Path targetDir) {
 		Objects.requireNonNull(execution0log)

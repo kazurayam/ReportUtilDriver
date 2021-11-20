@@ -1,4 +1,4 @@
-package com.kazurayam.ks.report
+package com.kazurayam.ks.reporting
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -13,7 +13,7 @@ import org.junit.runners.JUnit4
 import com.kms.katalon.core.configuration.RunConfiguration
 
 @RunWith(JUnit4.class)
-public class ReportWriterDriverTest {
+public class ReportUtilDriverTest {
 
 	private Path projectDir
 	private Path fixtureDir
@@ -32,17 +32,17 @@ public class ReportWriterDriverTest {
 	void test_findAncestorReportsDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
 		Path execution0log = inputReportsDir.resolve(RELATIVE_PATH).resolve("execution0.log")
-		Path actual = ReportWriterDriver.findAncestorReportsDir(execution0log)
+		Path actual = ReportUtilDriver.findAncestorReportsDir(execution0log)
 		assert actual == inputReportsDir
 	}
-	
+
 	@Test
 	void test_resolveOutputReportDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
 		Path inputReportDir = inputReportsDir.resolve(RELATIVE_PATH)
 		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_resolveOutputReportDir")
 		Files.createDirectories(targetDir)
-		Path outputReportDir = ReportWriterDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
+		Path outputReportDir = ReportUtilDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
 		assert outputReportDir == targetDir.resolve(RELATIVE_PATH)
 	}
 
@@ -52,7 +52,7 @@ public class ReportWriterDriverTest {
 		Path execution0log = inputReportsDir.resolve(RELATIVE_PATH).resolve("execution0.log")
 		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_generateABunch")
 		Files.createDirectories(targetDir)
-		ReportWriterDriver.generateABunch(execution0log, targetDir)
+		ReportUtilDriver.generateABunch(execution0log, targetDir)
 		//
 		Path html = targetDir.resolve(RELATIVE_PATH).resolve(HTML_FILENAME)
 		assert Files.exists(html)
@@ -68,7 +68,7 @@ public class ReportWriterDriverTest {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
 		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_generateBunches")
 		Files.createDirectories(targetDir)
-		ReportWriterDriver.generateBunches(inputReportsDir, targetDir)
+		ReportUtilDriver.generateBunches(inputReportsDir, targetDir)
 		//
 		Path html = targetDir.resolve(RELATIVE_PATH).resolve(HTML_FILENAME)
 		assert Files.exists(html)

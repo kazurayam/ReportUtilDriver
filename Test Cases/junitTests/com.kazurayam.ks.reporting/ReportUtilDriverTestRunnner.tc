@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>ReportWriterDriverTestRunnner</name>
+   <name>ReportUtilDriverTestRunnner</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>78d83a11-3817-454e-b5a8-8d64bb3ba802</testCaseGuid>
