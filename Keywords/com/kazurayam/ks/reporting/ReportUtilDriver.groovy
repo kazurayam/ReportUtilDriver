@@ -42,6 +42,7 @@ public class ReportUtilDriver {
 						if (file.getFileName().toString() == 'execution0.log') {
 							bunchDirs.add(file.getParent())
 						}
+						return FileVisitResult.CONTINUE
 					}
 				})
 		//

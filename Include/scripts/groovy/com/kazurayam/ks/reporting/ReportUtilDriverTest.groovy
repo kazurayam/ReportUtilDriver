@@ -5,27 +5,39 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.apache.commons.io.FileUtils
+
 
 import com.kms.katalon.core.configuration.RunConfiguration
 
 @RunWith(JUnit4.class)
 public class ReportUtilDriverTest {
 
-	private Path projectDir
-	private Path fixtureDir
+	private static Path projectDir
+	private static Path fixtureDir
+	private static Path classOutputDir
 
 	private static String RELATIVE_PATH = "20211120_140743/main/TS1/20211120_140743"
 	private static String HTML_FILENAME = "20211120_140743.html"
 	private static String XML_FILENAME  = "JUnit_Report.xml"
 
-	@Before
-	void setup() {
+	@BeforeClass
+	static void beforeClass() {
 		this.projectDir = Paths.get(RunConfiguration.getProjectDir())
 		this.fixtureDir = projectDir.resolve("Include/fixtures")
+		this.classOutputDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/")
+		if (Files.exists(classOutputDir)) {
+			FileUtils.deleteDirectory(classOutputDir.toFile())
+		}
+	}
+	
+	@Before
+	void setup() {
 	}
 
 	@Test
@@ -40,7 +52,7 @@ public class ReportUtilDriverTest {
 	void test_resolveOutputReportDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
 		Path inputReportDir = inputReportsDir.resolve(RELATIVE_PATH)
-		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_resolveOutputReportDir")
+		Path targetDir = this.classOutputDir.resolve("test_resolveOutputReportDir")
 		Files.createDirectories(targetDir)
 		Path outputReportDir = ReportUtilDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
 		assert outputReportDir == targetDir.resolve(RELATIVE_PATH)
@@ -50,7 +62,7 @@ public class ReportUtilDriverTest {
 	void test_generateABunch() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
 		Path bunchDir = inputReportsDir.resolve(RELATIVE_PATH)
-		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_generateABunch")
+		Path targetDir = this.classOutputDir.resolve("test_generateABunch")
 		Files.createDirectories(targetDir)
 		ReportUtilDriver.generateABunch(bunchDir, targetDir)
 		//
@@ -62,11 +74,10 @@ public class ReportUtilDriverTest {
 		//
 	}
 
-	@Ignore
 	@Test
 	void test_generateBunches() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path targetDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/test_generateBunches")
+		Path targetDir = this.classOutputDir.resolve("test_generateBunches")
 		Files.createDirectories(targetDir)
 		ReportUtilDriver.generateBunches(inputReportsDir, targetDir)
 		//
