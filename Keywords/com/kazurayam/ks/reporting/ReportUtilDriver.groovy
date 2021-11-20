@@ -8,12 +8,7 @@ import java.nio.file.attribute.BasicFileAttributes
 
 import com.kms.katalon.core.logging.model.TestSuiteLogRecord
 
-// until v8.1.x
-// import com.kms.katalon.core.reporting.ReportWriterUtil
-
-// since v8.2.0
-import com.kms.katalon.core.reporting.ReportUtil
-
+import com.kazurayam.ks.reporting.ReportUtilWrapper as ReportUtil
 
 public class ReportUtilDriver {
 
@@ -58,22 +53,6 @@ public class ReportUtilDriver {
 
 	static Path findAncestorReportsDir(Path bunchDir) {
 		return bunchDir.getParent().getParent().getParent().getParent()
-	}
-
-	/**
-	 * 
-	 * @author kazurayam
-	 */
-	class Execution0logFinder extends SimpleFileVisitor<Path> {
-		private List<Path> list;
-		static String FILENAME = "execution0.log"
-
-		Execution0logFinder() {
-			list = new ArrayList<Path>()
-		}
-
-
-
 	}
 
 }

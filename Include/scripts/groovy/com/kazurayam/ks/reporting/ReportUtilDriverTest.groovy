@@ -18,24 +18,20 @@ import com.kms.katalon.core.configuration.RunConfiguration
 @RunWith(JUnit4.class)
 public class ReportUtilDriverTest {
 
-	private static Path projectDir
-	private static Path fixtureDir
-	private static Path classOutputDir
-
-	private static String RELATIVE_PATH = "20211120_140743/main/TS1/20211120_140743"
-	private static String HTML_FILENAME = "20211120_140743.html"
-	private static String XML_FILENAME  = "JUnit_Report.xml"
+	static Path projectDir
+	static Path fixtureDir
+	static Path classOutputDir
 
 	@BeforeClass
 	static void beforeClass() {
 		this.projectDir = Paths.get(RunConfiguration.getProjectDir())
 		this.fixtureDir = projectDir.resolve("Include/fixtures")
-		this.classOutputDir = this.projectDir.resolve("build/tmp/testOutput/ReportWriterDriverTest/")
+		this.classOutputDir = this.projectDir.resolve("build/tmp/testOutput/ReportUtilDriverTest/")
 		if (Files.exists(classOutputDir)) {
 			FileUtils.deleteDirectory(classOutputDir.toFile())
 		}
 	}
-	
+
 	@Before
 	void setup() {
 	}
@@ -43,7 +39,7 @@ public class ReportUtilDriverTest {
 	@Test
 	void test_findAncestorReportsDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path bunchDir = inputReportsDir.resolve(RELATIVE_PATH)
+		Path bunchDir = inputReportsDir.resolve(FixtureConstants.RELATIVE_PATH)
 		Path actual = ReportUtilDriver.findAncestorReportsDir(bunchDir)
 		assert actual == inputReportsDir
 	}
@@ -51,25 +47,25 @@ public class ReportUtilDriverTest {
 	@Test
 	void test_resolveOutputReportDir() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path inputReportDir = inputReportsDir.resolve(RELATIVE_PATH)
+		Path inputBunchDir = inputReportsDir.resolve(FixtureConstants.RELATIVE_PATH)
 		Path targetDir = this.classOutputDir.resolve("test_resolveOutputReportDir")
 		Files.createDirectories(targetDir)
-		Path outputReportDir = ReportUtilDriver.resolveOutputReportDir(inputReportsDir, inputReportDir, targetDir)
-		assert outputReportDir == targetDir.resolve(RELATIVE_PATH)
+		Path outputReportDir = ReportUtilDriver.resolveOutputReportDir(inputReportsDir, inputBunchDir, targetDir)
+		assert outputReportDir == targetDir.resolve(FixtureConstants.RELATIVE_PATH)
 	}
 
 	@Test
 	void test_generateABunch() {
 		Path inputReportsDir = this.fixtureDir.resolve("Reports")
-		Path bunchDir = inputReportsDir.resolve(RELATIVE_PATH)
+		Path bunchDir = inputReportsDir.resolve(FixtureConstants.RELATIVE_PATH)
 		Path targetDir = this.classOutputDir.resolve("test_generateABunch")
 		Files.createDirectories(targetDir)
 		ReportUtilDriver.generateABunch(bunchDir, targetDir)
 		//
-		Path html = targetDir.resolve(RELATIVE_PATH).resolve(HTML_FILENAME)
+		Path html = targetDir.resolve(FixtureConstants.RELATIVE_PATH).resolve(FixtureConstants.HTML_FILENAME)
 		assert Files.exists(html)
 		//
-		Path xml = targetDir.resolve(RELATIVE_PATH).resolve(XML_FILENAME)
+		Path xml = targetDir.resolve(FixtureConstants.RELATIVE_PATH).resolve(FixtureConstants.XML_FILENAME)
 		assert Files.exists(xml)
 		//
 	}
@@ -81,10 +77,10 @@ public class ReportUtilDriverTest {
 		Files.createDirectories(targetDir)
 		ReportUtilDriver.generateBunches(inputReportsDir, targetDir)
 		//
-		Path html = targetDir.resolve(RELATIVE_PATH).resolve(HTML_FILENAME)
+		Path html = targetDir.resolve(FixtureConstants.RELATIVE_PATH).resolve(FixtureConstants.HTML_FILENAME)
 		assert Files.exists(html)
 		//
-		Path xml = targetDir.resolve(RELATIVE_PATH).resolve(XML_FILENAME)
+		Path xml = targetDir.resolve(FixtureConstants.RELATIVE_PATH).resolve(FixtureConstants.XML_FILENAME)
 		assert Files.exists(xml)
 		//
 	}
