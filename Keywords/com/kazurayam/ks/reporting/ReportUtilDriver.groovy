@@ -52,7 +52,7 @@ public class ReportUtilDriver {
 		Objects.requireNonNull(reportsDir)
 		assert Files.exists(reportsDir) : "${reportsDir.toString()} is not present"
 		Objects.requireNonNull(targetDir)
-		// iterate over the bunch directories (that contains execution0.log file) 
+		// iterate over the bunch directories (that contains execution0.log file)
 		// under the "[projectDir]/Reports" directory
 		List<Path> bunchDirs = new ArrayList<Path>()
 		Files.walkFileTree(reportsDir, new SimpleFileVisitor<Path>() {
