@@ -5,6 +5,18 @@ import com.kms.katalon.core.reporting.ReportUtil
 import java.nio.file.Files
 import java.lang.reflect.Method
 
+/**
+ * This class is a delegate to the following classes:
+ * 1. com.kms.katalon.core.reporting.ReportUtil
+ * 2. com.kms.katalon.core.reporting.ReportWriterUtil
+ * 
+ * The ReportUtil is bundled in the "core" jar of Katalon Studio.
+ * The ReportWriterUtil is bundled in the jar "Basic Report Plugin"
+ * 
+ * This will try to load the ReportUtil class first.
+ * 
+ * @author kazuayam
+ */
 public class ReportUtilWrapper {
 
 	// at Katalon Studio v7.8.2
@@ -19,10 +31,10 @@ public class ReportUtilWrapper {
 	static {
 		if (isReportUtilClassFound()) {
 			engine = getClassOfReportUtil()
-		} 
-		if (isBasicReportWriterUtilClassFound()) {
+		}
+		else if (isBasicReportWriterUtilClassFound()) {
 			engine = getClassOfBasicReportWriterUtil()
-		} 
+		}
 		else {
 			throw new IllegalStateException("Unable to load Class " + FQCN_ReportUtil + " or its equivalents.")
 		}
