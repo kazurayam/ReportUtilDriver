@@ -74,21 +74,21 @@ Please remark the 2 points of interest.
 
 2. As you can see in the Console log, Katalon Studio emitted message that told KS generated reports in HTML and CSV.
 
-Now I got the answer to my 1st question: *When Katalon Studio generates a bunch of test reports (HTML, XML, CSV) ?* When the `@AfterTestSuite`-annoated method was invoked, the reports are not yet there. Katalon Studio generates the reports AFTER my Test Suite execution has completely finished. 
+Now I got the answer to my 1st question: when Katalon Studio generates a bunch of test reports (HTML, XML, CSV). When the `@AfterTestSuite`-annoated method of TestListener was invoked, the HTML report was not there yet. Katalon Studio generates it sometime after my Test Suite execution has completely finished.
 
-But I have my 2nd question open: *How Katalon Studio generetes a HTML report and a JUnitReport.xml?*
+But my 2nd question is still open: *How Katalon Studio generetes a HTML report?*
 
 I have investigated the [source code](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/reporting/ReportUtil.java) of Katalon Studio, and have got an answer to it.
 
 ## Answer
 
-Katalon Studio API contains a class [`com.kms.katalon.core.reporting.ReportUtil`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/reporting/ReportUtil.java). It implements methods that transform the `execution0.log` file as input into the report files in HTML and XML etc.
+Katalon Studio API contains a class [`com.kms.katalon.core.reporting.ReportUtil`](https://github.com/katalon-studio/katalon-studio-testing-framework/blob/master/Include/scripts/groovy/com/kms/katalon/core/reporting/ReportUtil.java). It implements entry-point methods that transform the `execution0.log` file into the various format of reports.
 
 Please read the source for the answer.
 
 ### Test Listener
 
-See the source code at [`TL_generateReports`](Test Listeners/TL_generateReports.groovy)
+Please read [Test Listeners/TL_generateReports](Test%20Listeners/TL_generateReports.groovy)
 
 The @AfterTestSuite-annotated method will be invoked when a Test Suite finished running. It will call my keyword `ReportUtilDriver`.
 
