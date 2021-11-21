@@ -92,15 +92,13 @@ Please read [Test Listeners/TL_generateReports](Test%20Listeners/TL_generateRepo
 
 The @AfterTestSuite-annotated method will be invoked when a Test Suite finished running. It will call my keyword `ReportUtilDriver`.
 
-`TL_generateReports` scans the `Reports` directory of the project, and saves the new HTML files into `/Users/myName/tmp/katalon-reports` directory.
-
-If the `Reports` dicretory contains multiple results of Test Suite execution, say 3 sets, then `TL_genneratesReport` finds all 3 sets and re-generate reports and saves them into the output directory.
-
 ### Keyword
 
 My keyword class `ReportUtilDriver` will call `com.kms.katalon.core.reporting.ReportUtil` to generate reports.
 
-Please find the detail in the source code at [`com.kazurayam.ks.reporting.ReportUtilDriver`](Keywords/com/kazurayam/ks/reporting/ReportUtilDriver.groovy)
+`ReporrttUtilDriver#generateBunches()` method scans the `Reports` directory of the project, and saves the new HTML files into `/Users/[myName]/tmp/katalon-reports` directory. If the `Reports` dicretory contains multiple results of Test Suite execution, say 3 sets, then `generateBunches()` finds all 3 sets and re-generate reports and saves them into the output directory.
+
+Please read the source code at [`com.kazurayam.ks.reporting.ReportUtilDriver`](Keywords/com/kazurayam/ks/reporting/ReportUtilDriver.groovy) for detail.
 
 ## Demo
 
